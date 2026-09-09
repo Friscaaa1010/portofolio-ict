@@ -1,183 +1,269 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Pribadi | Mobile-First Web Designer</title>
+    <title>UI.UX Designer Portfolio</title>
     
-    <!-- Google Fonts: Montserrat -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Tailwind Config for Strict Color Palette with Bright Blues -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Montserrat', 'sans-serif'] },
                     colors: {
-                        navy: '#0A192F',
+                        'blue-neon': '#00E5FF',
+                        'blue-bright': '#3B82F6',
+                        'blue-deep': '#1D4ED8',
+                        'navy': '#0A192F',
                         'navy-light': '#112240',
-                        'blue-neon': '#00E5FF',   /* Biru Cyan Terang */
-                        'blue-bright': '#3B82F6', /* Biru Solid (Tailwind Blue 500) */
-                        'blue-deep': '#2563EB',   /* Biru Gelap (Tailwind Blue 600) */
-                        black: '#000000',
-                        'black-soft': '#0F0F0F',
-                        white: '#FFFFFF',
-                        'white-dim': '#E6F1FF'
+                        'black-soft': '#0a0a0a'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-
     <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: theme('colors.black');
-            color: theme('colors.white');
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        /* Scroll Reveal Animation Classes */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-        }
-        
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Mobile Menu Transitions */
-        #mobile-menu {
-            transition: transform 0.3s ease-in-out;
-            transform: translateX(100%);
-        }
-        #mobile-menu.open {
-            transform: translateX(0);
-        }
-
-        /* Active Navigation Link Indicator */
-        .nav-link.active {
-            border-bottom: 2px solid theme('colors.blue-neon');
-            color: theme('colors.blue-neon');
-        }
-        
-        /* Custom scrollbar for a techy feel */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: theme('colors.black');
-        }
-        ::-webkit-scrollbar-thumb {
-            background: theme('colors.navy-light');
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: theme('colors.blue-bright');
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #3B82F6; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00E5FF; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body class="antialiased flex flex-col min-h-screen">
+<body class="bg-black text-white antialiased flex flex-col min-h-screen font-sans selection:bg-blue-neon selection:text-black overflow-x-hidden">
 
     <!-- Navbar -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 bg-transparent">
         <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold tracking-tighter text-white">UI<span class="text-blue-neon font-light">.UX</span></a>
+            <a id="nav-brand" href="#" class="text-2xl font-bold tracking-tighter text-blue-bright">Frisca <span class="text-blue-neon font-light">Hendarman</span></a>
             
-            <!-- Mobile Menu Toggle Button -->
-            <button id="menu-btn" class="md:hidden p-2 text-blue-neon focus:outline-none" aria-label="Toggle Menu">
-                <i class="fas fa-bars text-2xl"></i>
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn" class="md:hidden text-blue-bright text-2xl focus:outline-none">
+                <i class="fas fa-bars"></i>
             </button>
 
             <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#home" class="nav-link text-sm font-medium hover:text-blue-neon transition py-1">Beranda</a>
-                <a href="#about" class="nav-link text-sm font-medium hover:text-blue-neon transition py-1">Tentang</a>
-                <a href="#portfolio" class="nav-link text-sm font-medium hover:text-blue-neon transition py-1">Karya</a>
-                <a href="#education" class="nav-link text-sm font-medium hover:text-blue-neon transition py-1">Pendidikan</a>
-                <a href="#hobbies" class="nav-link text-sm font-medium hover:text-blue-neon transition py-1">Hobi</a>
-                <a href="#contact" class="px-6 py-2.5 bg-blue-bright text-white font-bold rounded-sm hover:bg-blue-deep transition shadow-[4px_4px_0px_0px_#00E5FF] hover:shadow-none hover:translate-y-1 hover:translate-x-1">Hubungi</a>
+            <div class="hidden md:flex space-x-8 items-center font-bold">
+                <a href="#home" class="text-blue-neon hover:text-white transition-colors">Beranda</a>
+                <a href="#about" class="text-blue-neon hover:text-white transition-colors">Tentang</a>
+                <a href="#portfolio" class="text-blue-neon hover:text-white transition-colors">Karya</a>
+                <a href="#education" class="text-blue-neon hover:text-white transition-colors">Pendidikan</a>
+                <a href="#hobbies" class="text-blue-neon hover:text-white transition-colors">Hobi</a>
             </div>
+        </div>
+        
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-navy-light/95 backdrop-blur-md border-b border-blue-neon/20 py-4 px-6 flex flex-col space-y-4 font-bold shadow-lg">
+            <a href="#home" class="block text-blue-neon hover:text-white transition-colors">Beranda</a>
+            <a href="#about" class="block text-blue-neon hover:text-white transition-colors">Tentang</a>
+            <a href="#portfolio" class="block text-blue-neon hover:text-white transition-colors">Karya</a>
+            <a href="#education" class="block text-blue-neon hover:text-white transition-colors">Pendidikan</a>
+            <a href="#hobbies" class="block text-blue-neon hover:text-white transition-colors">Hobi</a>
         </div>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 z-40 bg-navy flex flex-col justify-center items-center md:hidden">
-        <div class="flex flex-col space-y-8 text-center w-full px-6">
-            <a href="#home" class="mobile-link text-2xl font-semibold text-white hover:text-blue-neon transition">Beranda</a>
-            <a href="#about" class="mobile-link text-2xl font-semibold text-white hover:text-blue-neon transition">Tentang</a>
-            <a href="#portfolio" class="mobile-link text-2xl font-semibold text-white hover:text-blue-neon transition">Karya</a>
-            <a href="#education" class="mobile-link text-2xl font-semibold text-white hover:text-blue-neon transition">Pendidikan</a>
-            <a href="#hobbies" class="mobile-link text-2xl font-semibold text-white hover:text-blue-neon transition">Hobi</a>
-            <a href="#contact" class="mobile-link mt-8 px-8 py-4 bg-blue-bright text-white font-bold text-lg rounded-sm w-full shadow-[4px_4px_0px_0px_#00E5FF]">Hubungi Saya</a>
-        </div>
-    </div>
-
     <!-- Hero Section -->
-    <section id="home" class="min-h-[100svh] pt-24 pb-12 px-6 flex items-center bg-black relative overflow-hidden">
-        <!-- Abstract glowing shapes -->
-        <div class="absolute top-1/4 -right-20 w-96 h-96 bg-blue-bright rounded-full blur-[150px] opacity-30"></div>
-        <div class="absolute bottom-10 -left-20 w-72 h-72 bg-blue-neon rounded-full blur-[120px] opacity-20"></div>
-        
-        <div class="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center relative z-10">
-            <div class="order-2 md:order-1 text-center md:text-left reveal">
-                <p class="text-blue-neon font-semibold tracking-widest uppercase mb-3 text-sm flex items-center justify-center md:justify-start gap-2">
-                    <i class="fas fa-terminal"></i> Web Designer
-                </p>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
-                    Mobile <br class="hidden md:block" />
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-neon to-blue-bright">First.</span>
-                </h1>
-                <p class="text-gray-400 text-base md:text-lg mb-10 max-w-md mx-auto md:mx-0 leading-relaxed">
-                    Saya merancang antarmuka yang mengutamakan performa dan kenyamanan pengguna di perangkat seluler, tanpa mengorbankan estetika.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <a href="#portfolio" class="px-8 py-4 bg-blue-bright text-white font-bold text-center rounded-sm hover:bg-blue-deep transition duration-300 shadow-[6px_6px_0px_0px_#00E5FF] hover:shadow-none hover:translate-y-1 hover:translate-x-1">Lihat Portfolio</a>
-                    <a href="#contact" class="px-8 py-4 border-2 border-blue-neon text-blue-neon font-bold text-center rounded-sm hover:bg-blue-neon/10 transition duration-300">Mari Mengobrol</a>
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+            <div class="w-96 h-96 bg-blue-neon/20 rounded-full blur-[120px] animate-pulse"></div>
+        </div>
+        <div class="z-10 text-center px-6 relative">
+            <h1 id="title-hero" class="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-neon to-blue-bright">Mobile</span> First.
+            </h1>
+            <p id="title-hero-sub" class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-8">UI/UX Designer spesialis pengalaman digital responsif, intuitif, dan futuristik.</p>
+            <a href="#portfolio" class="inline-block px-8 py-4 bg-blue-bright text-white font-bold rounded-sm shadow-[4px_4px_0px_0px_#00E5FF] hover:shadow-none hover:translate-y-1 hover:translate-x-1 transition-all">Lihat Portfolio</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-navy relative z-10 border-t border-white/5">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="reveal">
+                <div class="relative w-64 h-64 md:w-80 md:h-80 mx-auto group">
+                    <div class="absolute inset-0 bg-blue-neon/30 blur-2xl group-hover:bg-blue-neon/50 transition duration-500 rounded-full"></div>
+                    <img id="profile-img" src="https://placehold.co/600x600/0A192F/00E5FF?text=Designer" alt="Desainer" class="relative z-10 w-full h-full object-cover rounded-full border-4 border-blue-bright shadow-[0_0_30px_rgba(0,229,255,0.3)]">
                 </div>
             </div>
-            
-            <div class="order-1 md:order-2 flex justify-center reveal reveal-delay-200">
-                <div class="relative w-64 h-64 md:w-80 md:h-80 group">
-                    <div class="absolute inset-0 bg-blue-bright border-2 border-blue-neon translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-500"></div>
-                    <img src="https://placehold.co/600x600/0A192F/00E5FF?text=Designer" alt="Profile" class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500 z-10 border border-white/20">
-                    <!-- Tech accent overlay -->
-                    <div class="absolute inset-0 border border-blue-neon/50 z-20 pointer-events-none group-hover:border-blue-neon transition-colors duration-500">
-                        <div class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-blue-neon"></div>
-                        <div class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-blue-neon"></div>
-                        <div class="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-blue-neon"></div>
-                        <div class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-blue-neon"></div>
+            <div class="reveal delay-100">
+                <h2 id="title-about" class="text-3xl md:text-4xl font-bold mb-6 text-white border-b-2 border-blue-neon inline-block pb-2">Tentang Saya</h2>
+                <p id="philosophy-text" class="text-gray-400 leading-relaxed text-lg mb-6"></p>
+                <div class="flex gap-4">
+                    <div class="p-4 bg-black-soft rounded-sm border border-white/5 border-l-2 border-l-blue-neon">
+                        <h4 class="text-blue-neon font-bold text-xl">3+</h4>
+                        <p class="text-sm text-gray-500">Tahun Pengalaman</p>
+                    </div>
+                    <div class="p-4 bg-black-soft rounded-sm border border-white/5 border-l-2 border-l-blue-neon">
+                        <h4 class="text-blue-neon font-bold text-xl">50+</h4>
+                        <p class="text-sm text-gray-500">Proyek Selesai</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About & Skills Section -->
-    <section id="about" class="py-20 px-6 bg-navy border-t border-white/5 relative">
-        <div class="max-w-6xl mx-auto relative z-10">
-            <div class="mb-16 reveal">
-                <h2 class="text-3xl md:text-5xl font-bold mb-4">Filosofi Desain</h2>
-                <div class="w-20 h-1 bg-blue-neon mb-8"></div>
-                <p class="text-gray-300 text-lg max-w-2xl leading-relaxed">
-                    Di era digital ini, mayoritas pengguna mengakses web melalui smartphone. Oleh karena itu, pendekatan <strong class="text-blue-neon">Mobile-First</strong> bukan lagi sebuah pilihan, melainkan sebuah keharusan. Saya merancang mulai dari layar terkecil.
-                </p>
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-black-soft relative z-10">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 id="title-portfolio" class="text-3xl md:text-4xl font-bold mb-12 text-center text-white"><span class="text-blue-neon">Karya</span> Terpilih</h2>
+            <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-20 bg-navy relative z-10 border-t border-white/5">
+        <div class="max-w-5xl mx-auto px-6">
+            <h2 id="title-education" class="text-3xl md:text-4xl font-bold mb-12 text-center text-white"><span class="text-blue-neon">Jejak</span> Pendidikan</h2>
+            <div id="education-grid" class="flex flex-col gap-6 relative border-l-2 border-blue-neon/30 pl-6 md:pl-10 ml-4 md:ml-10">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Hobbies Section -->
+    <section id="hobbies" class="py-20 bg-black-soft relative z-10 border-t border-white/5">
+        <div class="max-w-6xl mx-auto px-6 relative">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-bright/10 rounded-full blur-[100px] pointer-events-none"></div>
+            <h2 id="title-hobbies" class="text-3xl md:text-4xl font-bold mb-12 text-center text-white">Sisi <span class="text-blue-neon">Lain</span></h2>
+            <div id="hobbies-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Footer -->
+    <footer id="contact" class="bg-navy py-12 border-t border-blue-neon/20 relative z-10 overflow-hidden">
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-32 bg-blue-neon/5 blur-[80px] pointer-events-none"></div>
+        <div class="max-w-6xl mx-auto px-6 flex flex-col items-center relative z-10">
+            <h2 id="title-contact" class="text-2xl font-bold mb-6 text-white">Mari Berkolaborasi</h2>
+            <a href="mailto:hello@example.com" class="px-8 py-3 bg-blue-bright text-white font-bold text-lg rounded-sm shadow-[4px_4px_0px_0px_#00E5FF] hover:shadow-none hover:translate-y-1 hover:translate-x-1 transition-all mb-12">Kirim Pesan</a>
+            
+            <div class="flex space-x-6 mb-8">
+                <a id="link-tiktok" href="#" target="_blank" class="w-12 h-12 rounded-full bg-black border border-white/10 flex items-center justify-center text-gray-400 hover:text-blue-neon hover:border-blue-neon hover:shadow-[0_0_15px_#00E5FF] transition-all"><i class="fab fa-tiktok text-xl"></i></a>
+                <a id="link-youtube" href="#" target="_blank" class="w-12 h-12 rounded-full bg-black border border-white/10 flex items-center justify-center text-gray-400 hover:text-blue-neon hover:border-blue-neon hover:shadow-[0_0_15px_#00E5FF] transition-all"><i class="fab fa-youtube text-xl"></i></a>
+                <a id="link-instagram" href="#" target="_blank" class="w-12 h-12 rounded-full bg-black border border-white/10 flex items-center justify-center text-gray-400 hover:text-blue-neon hover:border-blue-neon hover:shadow-[0_0_15px_#00E5FF] transition-all"><i class="fab fa-instagram text-xl"></i></a>
+                <a id="link-spotify" href="#" target="_blank" class="w-12 h-12 rounded-full bg-black border border-white/10 flex items-center justify-center text-gray-400 hover:text-blue-neon hover:border-blue-neon hover:shadow-[0_0_15px_#00E5FF] transition-all"><i class="fab fa-spotify text-xl"></i></a>
+            </div>
+            
+            <p class="text-gray-600 text-sm">© 2026 UI.UX Designer. Dibuat dengan visi.</p>
+            <button id="open-admin-btn" class="mt-8 text-gray-800 hover:text-blue-neon transition-colors text-xs flex items-center gap-2"><i class="fas fa-lock"></i> Admin</button>
+        </div>
+    </footer>
+
+    <!-- Admin Login Modal Pop-up -->
+    <div id="admin-login-modal" class="hidden fixed inset-0 z-[75] bg-black/80 items-center justify-center backdrop-blur-sm px-4">
+        <div class="bg-navy border border-blue-neon/40 p-6 rounded-sm max-w-sm w-full shadow-[0_0_30px_rgba(0,229,255,0.2)] relative">
+            <button id="close-login-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+            <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2"><i class="fas fa-lock text-blue-neon"></i> Login Admin</h3>
+            <p class="text-xs text-gray-400 mb-4">Masukkan password untuk mengakses dashboard admin.</p>
+            
+            <form id="admin-login-form" class="space-y-4">
+                <div>
+                    <label class="block text-gray-300 text-sm mb-1">Password</label>
+                    <input type="password" id="admin-password-input" placeholder="Password default: admin123" class="w-full px-3 py-2 bg-black border border-white/10 text-white outline-none rounded-sm focus:border-blue-neon text-sm">
+                </div>
+                <div id="login-error-msg" class="text-red-400 text-xs hidden flex items-center gap-1">
+                    <i class="fas fa-exclamation-circle"></i> Password salah! Silakan coba lagi.
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" id="cancel-login-btn" class="px-4 py-2 bg-white/10 text-gray-300 hover:text-white rounded-sm text-sm font-semibold transition">Batal</button>
+                    <button type="submit" class="px-5 py-2 bg-blue-bright text-white font-bold rounded-sm shadow-[3px_3px_0_0_#00E5FF] hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition text-sm">Masuk</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="hidden opacity-0 fixed inset-0 z-[70] bg-black/95 overflow-y-auto transition-opacity duration-300">
+        <div class="max-w-5xl mx-auto p-6 min-h-screen">
+            <div class="flex justify-between items-center mb-8 pb-4 border-b border-white/10 mt-4">
+                <h2 class="text-3xl text-white font-bold"><i class="fas fa-cogs text-blue-neon mr-3"></i>Dashboard Admin</h2>
+                <button id="close-admin" class="text-gray-400 hover:text-white transition text-2xl"><i class="fas fa-times"></i></button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Skill Card 1 -->
+            <!-- Edit Titles Section -->
+            <div class="bg-navy-light p-6 border border-white/10 rounded-sm mb-8">
+                <h3 class="text-xl text-white font-bold mb-4 border-l-4 border-blue-neon pl-3">Kelola Judul Bagian</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-1">Nama Navbar / Logo</label>
+                        <input type="text" id="input-title-brand" placeholder="Contoh: Frisca Hendarman" class="w-full px-3 py-2 bg-black border border-white/10 text-white outline-none rounded-sm focus:border-blue-neon text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-1">Judul Hero</label>
+                        <input type="text" id="input-title-hero" placeholder="Contoh: Mobile First." class="w-full px-3 py-2 bg-black border border-white/10 text-white outline-none rounded-sm focus:border-blue-neon text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-1">Sub-judul Hero</label>
+                        <input type="text" id="input-title-hero-sub" placeholder="Subjudul hero" class="w-full px-3 py-2 bg-black border border-white/10 text-white outline-none rounded-sm focus:border-blue-neon text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-1">Judul "Tentang"</label>
+                        <input type="text" id="input-title-about" placeholder="Contoh: Tentang Saya" class="w-full px-3 py-2 bg-black border border-white/10 text-white outline-none rounded-sm focus:border-blue-neon text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-1">Judul "Karya"</label>
+                        <input type="text" id="input-title-portfolio" placeholder="Contoh: Karya Terpilih" class="w-full px-3 py-2 bg-black border border-white/10 text-white outline-none rounded-sm focus:border-blue-neon text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-1">Judul "Pendidikan"</label>
+                        <input type="text" id="input-title-education" placeholder="Contoh: Jejak Pendidikan" class="w-full px-3 py-2 bg-black border border-white/10 text-white outline-none rounded-sm focus:border-blue-neon text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 text-sm mb-1">Judul "Hobi"</label>
+                        <input type="text" id="input-title-hobbies" placeholder="Contoh: Sisi Lain" class="w-full px-3 py-2 bg-black border border-white/10 text-white outline-none rounded-sm focus:border-blue-neon text-sm">
+                    </div>
+                </div>
+                <button onclick="saveTitles()" class="px-6 py-2 bg-blue-bright text-white font-bold rounded-sm shadow-[3px_3px_0_0_#00E5FF] hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition">Simpan Judul</button>
+            </div>
+
+            <!-- Profile & Social Edit Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <!-- Profile Edit -->
+                <div class="bg-navy-light p-6 border border-white/10 rounded-sm">
+                    <h3 class="text-xl text-white font-bold mb-4 border-l-4 border-blue-neon pl-3">Kelola Profil & Foto Designer</h3>
+                    
+                    <div class="flex items-center gap-4 mb-4 p-3 bg-black/40 border border-white/5 rounded-sm">
+                        <img id="admin-profile-preview" src="https://placehold.co/600x600/0A192F/00E5FF?text=Designer" alt="Preview Foto" class="w-16 h-16 rounded-full object-cover border-2 border-blue-neon">
+                        <div>
+                            <p class="text-xs text-blue-neon font-bold">Pratinjau Foto Profil</p>
+                            <p class="text-xs text-gray-400">Pilih berkas lokal, tautan URL, atau avatar preset di bawah.</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-300 text-sm mb-1"><i class="fas fa-upload text-blue-neon mr-1"></i> Unggah Gambar dari Perangkat</label>
+                        <input type="file" id="input-profile-file" accept="image/*" class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-xs file:font-semibold file:bg-blue-bright file:text-white hover:file:bg-blue-deep cursor-pointer bg-black p-1 border border-white/10">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-300 text-sm mb-1"><i class="fas fa-link text-blue-neon mr-1"></i> Atau Gunakan URL Gambar</label>
+                        <input type="text" id="input-profile-img" placeholder="https://..." class="w-full px-3 py-2 bg-black border border-white/10 text-white outline-none rounded-sm focus:border-blue-neon text-sm">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-gray-300 text-sm mb-1"><i class="fas fa-user-astronaut text-blue-neon mr-1"></i> Pilih Preset Avatar Designer</label>
+                        <div class="flex flex-wrap gap-2 pt-1">
+                            <button type="button" onclick="selectPresetAvatar('https://placehold.co/600x600/0A192F/00E5FF?text=3D+Designer')" class="px-3 py-1 bg-black text-xs text-gray-300 border border-white/10 hover:border-blue-neon hover:text-blue-neon rounded-sm">3D Tech</button>
+                            <button type="button" onclick="selectPresetAvatar('https://placehold.co/600x600/112240/3B82F6?text=UI+Designer')" class="px-3 py-1 bg-black text-xs text-gray-300 border border-white/10 hover:border-blue-neon hover:text-blue-neon rounded-sm">Blue Minimal</button>
+                            <button type="button" onclick="selectPresetAvatar('https://placehold.co/600x600/000000/00E5FF?text=Cyberpunk')" class="px-3 py-1 bg-black text-xs text-gray-300 border border-white/10 hover:border-blue-neon hover:text-blue-neon rounded-sm">Cyberpunk</button>
+                            <button type="button" onclick="selectPresetAvatar('https://placehold.co/600x600/1D4ED8/FFFFFF?text=Creative+Pro')" class="px-3 py-1 bg-black text-xs text-gray-300 border border-white/10 hover:b Skill Card 1 -->
                 <div class="bg-navy-light p-8 border border-white/5 hover:border-blue-neon transition-all duration-300 reveal group shadow-lg hover:shadow-[0_0_20px_rgba(0,229,255,0.15)]">
                     <i class="fas fa-mobile-screen text-4xl mb-6 text-blue-bright group-hover:text-blue-neon transition-colors"></i>
                     <h3 class="text-xl font-bold mb-3 group-hover:text-white transition-colors">Responsive Layout</h3>
