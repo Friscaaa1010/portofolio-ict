@@ -381,15 +381,28 @@
     <!-- Logika Aplikasi & Firebase Sync -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Konfigurasi Cloud
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-portfolio';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB_o2OooXhoSobotRyxGNK_Z_uGq_yKR80",
+            authDomain: "portofoliofriscalucu.firebaseapp.com",
+            projectId: "portofoliofriscalucu",
+            storageBucket: "portofoliofriscalucu.firebasestorage.app",
+            messagingSenderId: "970882117135",
+            appId: "1:970882117135:web:46d287b336976ce015bd7a"
+        };
+
+        // Initialize Firebase
         let app, firestoreDB, auth;
-        let currentUser = null;
+        try {
+            app = initializeApp(firebaseConfig);
+            firestoreDB = getFirestore(app);
+            auth = getAuth(app);
+        } catch (e) {
+            console.error("Firebase init error:", e);
+        }
 
         // Inisialisasi Objek Data Utama (db)
         let db = {
@@ -478,13 +491,6 @@
             ]
         };
 
-        try {
-            app = initializeApp(firebaseConfig);
-            firestoreDB = getFirestore(app);
-            auth = getAuth(app);
-        } catch (e) {
-            console.warn("Firebase tidak dapat diinisialisasi. Berjalan di mode LocalStorage.");
-        }
 
         // Available icons list
         const availableIcons = [
@@ -670,48 +676,46 @@
         }
 
         async function saveToCloud() {
-            localStorage.setItem('portfolio_data', JSON.stringify(db));
             try {
-                if (currentUser && firestoreDB) {
-                    const docRef = doc(firestoreDB, 'artifacts', appId, 'users', currentUser.uid);
+                if (firestoreDB) {
+                    const docRef = doc(firestoreDB, 'portfolio', 'content');
                     await setDoc(docRef, { dbData: db }, { merge: true });
                 }
             } catch (err) {
-                console.warn("Penyimpanan cloud dialihkan ke LocalStorage:", err.message);
+                console.error("Gagal menyimpan ke Firestore:", err);
             }
         }
 
         async function initCloudData() {
-            const savedLocal = localStorage.getItem('portfolio_data');
-            if (savedLocal) {
-                try {
-                    const parsedData = JSON.parse(savedLocal);
-                    db = { ...db, ...parsedData };
-                } catch (e) {
-                    console.warn("Gagal membaca LocalStorage", e);
-                }
-            }
-
             try {
                 if (auth) {
-                    if (typeof __initial_auth_token !== 'undefined') {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
+                    try {
                         await signInAnonymously(auth);
-                    }
-                    currentUser = auth.currentUser;
-
-                    if (currentUser && firestoreDB) {
-                        const docRef = doc(firestoreDB, 'artifacts', appId, 'users', currentUser.uid);
-                        const snap = await getDoc(docRef);
-                        if (snap.exists() && snap.data().dbData) {
-                            db = { ...db, ...snap.data().dbData };
-                            localStorage.setItem('portfolio_data', JSON.stringify(db));
-                        }
+                    } catch (authErr) {
+                        console.warn("Info autentikasi:", authErr.message);
                     }
                 }
+
+                if (firestoreDB) {
+                    const docRef = doc(firestoreDB, 'portfolio', 'content');
+                    const snap = await getDoc(docRef);
+                    if (snap.exists() && snap.data().dbData) {
+                        db = { ...db, ...snap.data().dbData };
+                    } else {
+                        await setDoc(docRef, { dbData: db });
+                    }
+
+                    // Sinkronisasi realtime
+                    onSnapshot(docRef, (docSnap) => {
+                        if (docSnap.exists() && docSnap.data().dbData) {
+                            db = { ...db, ...docSnap.data().dbData };
+                            renderFrontend();
+                            renderAdmin();
+                        }
+                    });
+                }
             } catch (err) {
-                console.warn("Berjalan di Mode Penyimpanan Lokal Offline.", err.message);
+                console.error("Gagal memuat data dari Firestore:", err);
             }
 
             renderIconSelector();
